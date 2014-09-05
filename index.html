@@ -1,0 +1,26 @@
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+        <title>Swipe Example</title>
+        <style type="text/css">
+            body
+            {
+                font-family: Helvetica, san-serif;
+                text-align: center;
+                font-size:24px;
+            }
+            div { padding: 128px 0 0 0; }
+        </style>
+        <script type="text/javascript" src="swipe.js"></script>
+    </head>
+    <body>
+        <div id="swipeBox" ontouchstart="touchStart(event,'swipeBox');"  ontouchend="touchEnd(event);" ontouchmove="touchMove(event);" ontouchcancel="touchCancel(event);" style="position:relative;width:100%;height:100%;">
+            <p>Swipe the page with one finger to change the background color</p>
+            <p>LEFT = ORANGE</p>
+            <p>RIGHT = GREEN</p>
+            <p>UP = MAROON</p>
+            <p>DOWN = PURPLE</p>
+        </div>
+    </body>
+</html>
