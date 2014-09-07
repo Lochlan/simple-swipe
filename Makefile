@@ -5,6 +5,7 @@ DEPS := node_modules
 
 # tools
 JSHINT := ./node_modules/.bin/jshint
+JSLINT := ./node_modules/.bin/jslint
 UGLIFY := ./node_modules/.bin/uglifyjs
 
 # rules
@@ -24,6 +25,7 @@ lint:
 # file rules
 %.min.js: %.js
 	$(JSHINT) $?
+	$(JSLINT) $?
 	$(UGLIFY) $? --output $@
 
 node_modules: package.json
