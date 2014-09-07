@@ -1,26 +1,52 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
     <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-
+        <meta charset="UTF-8">
         <title>Swipe Example</title>
         <style type="text/css">
-            body
-            {
-                font-family: Helvetica, san-serif;
-                text-align: center;
-                font-size:24px;
+            html {
+                height: 100%;
             }
-            div { padding: 128px 0 0 0; }
+            body {
+                font-family: Helvetica, sans-serif;
+                font-size: 24px;
+                height: 100%;
+                margin: 0;
+                text-align: center;
+            }
+            #swipeBox {
+                box-sizing: border-box;
+                height: 100%;
+                padding-top: 128px;
+            }
         </style>
-        <script type="text/javascript" src="swipe.js"></script>
+        <script type="text/javascript" src="simple-swipe.js"></script>
     </head>
     <body>
-        <div id="swipeBox" ontouchstart="touchStart(event,'swipeBox');"  ontouchend="touchEnd(event);" ontouchmove="touchMove(event);" ontouchcancel="touchCancel(event);" style="position:relative;width:100%;height:100%;">
+        <div id="swipeBox">
             <p>Swipe the page with one finger to change the background color</p>
             <p>LEFT = ORANGE</p>
             <p>RIGHT = GREEN</p>
             <p>UP = MAROON</p>
             <p>DOWN = PURPLE</p>
         </div>
+
+        <script type="text/javascript">
+            var s = new SimpleSwipe("swipeBox", function (direction, el) {
+                switch(direction) {
+                    case 'left':
+                        el.style.backgroundColor = 'orange';
+                        break;
+                    case 'right':
+                        el.style.backgroundColor = 'green';
+                        break;
+                    case 'up':
+                        el.style.backgroundColor = 'maroon';
+                        break;
+                    case 'down':
+                        el.style.backgroundColor = 'purple';
+                }
+            });
+        </script>
     </body>
 </html>
