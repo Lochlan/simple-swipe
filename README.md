@@ -11,7 +11,7 @@ var s = new SimpleSwipe(elementId, function (direction, element) {
     console.log(direction);
 }, minSwipeLength);
 ```
-The callback fires on the `touchend` event.  The `minSwipeLength` argument is optional, defaulting to 72 pixels.
+The callback fires on the `touchend` event.  Note that the context for the `this` keyword inside the callback is the SimpleSwipe object. The `minSwipeLength` argument is optional, defaulting to 72 pixels.
 
 Remove swipe listeners:
 ```JavaScript
@@ -21,3 +21,7 @@ s.removeListeners();
 That's it!
 
 For more details [take a look at the code](https://github.com/Lochlan/swipe-demo/blob/master/simple-swipe.js) or [view an example](http://lochlan.github.io/simple-swipe).
+
+## Build Tools
+
+A makefile-based build system is provided to ease development.  It requires [node.js](http://nodejs.org/), [npm](https://www.npmjs.org/), and (of course) [GNU Make](http://www.gnu.org/software/make/).  Once those are installed, run `make` in your shell to install node packages and then lint and minify the code.  See [the makefile](https://github.com/Lochlan/swipe-demo/blob/master/Makefile) for details.
