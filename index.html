@@ -32,8 +32,8 @@
         </div>
 
         <script type="text/javascript">
-            var s = new SimpleSwipe("swipeBox", function (direction, el) {
-                switch(direction) {
+            var s = new SimpleSwipe("swipeBox", function (swipe, el) {
+                switch(swipe.direction) {
                     case 'left':
                         el.style.backgroundColor = 'orange';
                         break;

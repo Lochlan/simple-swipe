@@ -50,7 +50,10 @@
             var swipeLength = Math.round(Math.sqrt(Math.pow(this.endX - this.startX, 2) + Math.pow(this.endY - this.startY, 2)));
             var angle = this.getAngle(this.startX, this.startY, this.endX, this.endY);
             if (swipeLength >= this.minSwipeLength) {
-                this.callback(this.getDirection(angle), this.el);
+                this.callback({
+                    direction: this.getDirection(angle),
+                    length: swipeLength,
+                }, this.el);
             }
             this.touchCancel();
         },
