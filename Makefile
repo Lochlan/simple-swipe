@@ -21,6 +21,7 @@ deps: $(DEPS)
 
 lint:
 	$(JSHINT) $(SRC)
+	$(JSLINT) $(SRC)
 
 # file rules
 %.min.js: %.js
