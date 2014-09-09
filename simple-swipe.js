@@ -16,21 +16,28 @@
         startY: undefined,
         x: undefined,
         y: undefined,
-        getAngle: function () {
+        getAngle: function (x0, y0, x1, y1) {
+            x0 = x0 || this.startX;
+            y0 = y0 || this.startY;
+            x1 = x1 || this.x;
+            y1 = y1 || this.y;
             function mod(a, n) { return ((a % n) + n) % n; }
-            var r = Math.atan2(this.y - this.startY, this.startX - this.x); // radians
+            var r = Math.atan2(y1 - y0, x0 - x1); // radians
             return mod(Math.round(r * 180 / Math.PI), 360); // degrees
         },
-        getDirection: function () {
-            var angle = this.getAngle();
+        getDirection: function (angle) {
+            angle = angle || this.getAngle();
             return (angle >= 315 || angle <= 45) ? 'left'
                 : (angle > 45 && angle < 135) ? 'down'
                     : (angle >= 135 && angle <= 225) ? 'right'
                         : 'up';
         },
-        getLength: function () {
-            var length = Math.round(Math.sqrt(Math.pow(this.x - this.startX, 2) + Math.pow(this.y - this.startY, 2)));
-            return isNaN(length) ? 0 : length;
+        getLength: function (x0, y0, x1, y1) {
+            x0 = x0 || this.startX;
+            y0 = y0 || this.startY;
+            x1 = x1 || this.x;
+            y1 = y1 || this.y;
+            return Math.round(Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)));
         },
         touchStart: function (event) {
             event.preventDefault();
@@ -74,20 +81,20 @@
         },
         handleEvent: function (event) {
             switch (event.type) {
-            case 'touchcancel':
-                this.touchCancel();
-                break;
-            case 'touchend':
-                this.touchEnd(event);
-                break;
-            case 'touchleave':
-                this.touchCancel();
-                break;
             case 'touchmove':
                 this.touchMove(event);
                 break;
             case 'touchstart':
                 this.touchStart(event);
+                break;
+            case 'touchend':
+                this.touchEnd(event);
+                break;
+            case 'touchcancel':
+                this.touchCancel();
+                break;
+            case 'touchleave':
+                this.touchCancel();
                 break;
             }
         },
