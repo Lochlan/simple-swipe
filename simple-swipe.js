@@ -14,6 +14,8 @@
         callbackEnd: undefined,
         startX: undefined,
         startY: undefined,
+        prevX: undefined,
+        prevY: undefined,
         x: undefined,
         y: undefined,
         getAngle: function (x0, y0, x1, y1) {
@@ -51,12 +53,16 @@
         touchMove: function (event) {
             event.preventDefault();
             if (event.touches.length === 1) {
+                this.prevX = this.x;
+                this.prevY = this.y;
                 this.x = event.touches[0].pageX;
                 this.y = event.touches[0].pageY;
                 if (this.callbackMove) {
                     this.callbackMove({
                         direction: this.getDirection(),
+                        directionLast: this.getDirection(this.getAngle(this.prevX, this.prevY)),
                         length: this.getLength(),
+                        lengthLast: this.getLength(this.prevX, this.prevY),
                     }, this.el);
                 }
             } else {
@@ -76,6 +82,8 @@
         touchCancel: function () {
             delete this.startX;
             delete this.startY;
+            delete this.prevX;
+            delete this.prevY;
             delete this.x;
             delete this.y;
         },
