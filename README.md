@@ -6,12 +6,14 @@ SimpleSwipe provides a JavaScript interface for handling basic one-finger swipin
 
 Attach swipe listeners:
 ```JavaScript
-var s = new SimpleSwipe(elementId, function (swipe, element) {
-    // do something
-    console.log(swipe);
-}, minSwipeLength);
+var s = new SimpleSwipe(elementId,
+    function (swipe, element) {
+        console.log('swipe move', swipe);
+    }, function (swipe, element) {
+        console.log('swipe end', swipe);
+    });
 ```
-The callback fires on the `touchend` event.  Note that the context for the `this` keyword inside the callback is the SimpleSwipe object. The `minSwipeLength` argument is optional, defaulting to 72 pixels.
+The callbacks fire on the `touchmove` and `touchend` events respectively.  Note that the context for the `this` keyword inside the callbacks is the SimpleSwipe object
 
 Remove swipe listeners:
 ```JavaScript

@@ -1,31 +1,36 @@
 (function (window) {
     'use strict';
 
-    function SimpleSwipe(elId, callback, minSwipeLength) {
+    function SimpleSwipe(elId, callbackMove, callbackEnd) {
         this.el = document.getElementById(elId);
-        this.callback = callback;
-        this.minSwipeLength = minSwipeLength || this.minSwipeLength;
+        this.callbackMove = callbackMove;
+        this.callbackEnd = callbackEnd;
         this.addListeners();
     }
 
     SimpleSwipe.prototype = {
         el: undefined,
-        callback: undefined,
-        minSwipeLength: 72,
+        callbackMove: undefined,
+        callbackEnd: undefined,
         startX: undefined,
         startY: undefined,
-        endX: undefined,
-        endY: undefined,
-        getAngle: function (x0, y0, x1, y1) {
+        x: undefined,
+        y: undefined,
+        getAngle: function () {
             function mod(a, n) { return ((a % n) + n) % n; }
-            var r = Math.atan2(y1 - y0, x0 - x1); // radians
+            var r = Math.atan2(this.y - this.startY, this.startX - this.x); // radians
             return mod(Math.round(r * 180 / Math.PI), 360); // degrees
         },
-        getDirection: function (angle) {
+        getDirection: function () {
+            var angle = this.getAngle();
             return (angle >= 315 || angle <= 45) ? 'left'
                 : (angle > 45 && angle < 135) ? 'down'
                     : (angle >= 135 && angle <= 225) ? 'right'
                         : 'up';
+        },
+        getLength: function () {
+            var length = Math.round(Math.sqrt(Math.pow(this.x - this.startX, 2) + Math.pow(this.y - this.startY, 2)));
+            return isNaN(length) ? 0 : length;
         },
         touchStart: function (event) {
             event.preventDefault();
@@ -39,20 +44,24 @@
         touchMove: function (event) {
             event.preventDefault();
             if (event.touches.length === 1) {
-                this.endX = event.touches[0].pageX;
-                this.endY = event.touches[0].pageY;
+                this.x = event.touches[0].pageX;
+                this.y = event.touches[0].pageY;
+                if (this.callbackMove) {
+                    this.callbackMove({
+                        direction: this.getDirection(),
+                        length: this.getLength(),
+                    }, this.el);
+                }
             } else {
                 this.touchCancel();
             }
         },
         touchEnd: function (event) {
             event.preventDefault();
-            var swipeLength = Math.round(Math.sqrt(Math.pow(this.endX - this.startX, 2) + Math.pow(this.endY - this.startY, 2)));
-            var angle = this.getAngle(this.startX, this.startY, this.endX, this.endY);
-            if (swipeLength >= this.minSwipeLength) {
-                this.callback({
-                    direction: this.getDirection(angle),
-                    length: swipeLength,
+            if (this.callbackEnd) {
+                this.callbackEnd({
+                    direction: this.getDirection(),
+                    length: this.getLength(),
                 }, this.el);
             }
             this.touchCancel();
@@ -60,8 +69,8 @@
         touchCancel: function () {
             delete this.startX;
             delete this.startY;
-            delete this.endX;
-            delete this.endY;
+            delete this.x;
+            delete this.y;
         },
         handleEvent: function (event) {
             switch (event.type) {

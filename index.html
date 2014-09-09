@@ -33,21 +33,28 @@
         </div>
 
         <script type="text/javascript">
-            var s = new SimpleSwipe("swipeBox", function (swipe, el) {
-                switch(swipe.direction) {
-                    case 'left':
-                        el.style.backgroundColor = 'orange';
-                        break;
-                    case 'right':
-                        el.style.backgroundColor = 'green';
-                        break;
-                    case 'up':
-                        el.style.backgroundColor = 'maroon';
-                        break;
-                    case 'down':
-                        el.style.backgroundColor = 'purple';
-                }
-            });
+            var s = new SimpleSwipe("swipeBox",
+                undefined,
+                function (swipe, el) {
+                    // Minimum swipe length
+                    if (swipe.length < 72) {
+                        return;
+                    }
+
+                    switch(swipe.direction) {
+                        case 'left':
+                            el.style.backgroundColor = 'orange';
+                            break;
+                        case 'right':
+                            el.style.backgroundColor = 'green';
+                            break;
+                        case 'up':
+                            el.style.backgroundColor = 'maroon';
+                            break;
+                        case 'down':
+                            el.style.backgroundColor = 'purple';
+                    }
+                });
         </script>
     </body>
 </html>
