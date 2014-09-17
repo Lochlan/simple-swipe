@@ -1,8 +1,8 @@
 (function (window) {
     'use strict';
 
-    function SimpleSwipe(elId, callbackMove, callbackEnd) {
-        this.el = document.getElementById(elId);
+    function SimpleSwipe(el, callbackMove, callbackEnd) {
+        this.el = el;
         this.callbackMove = callbackMove;
         this.callbackEnd = callbackEnd;
         this.addListeners();
@@ -39,7 +39,8 @@
             y0 = y0 || this.startY;
             x1 = x1 || this.x;
             y1 = y1 || this.y;
-            return Math.round(Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)));
+            var length = Math.round(Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)));
+            return isNaN(length) ? 0 : length;
         },
         touchStart: function (event) {
             event.preventDefault();
@@ -114,11 +115,11 @@
             this.el.addEventListener('touchstart', this);
         },
         removeListeners: function () {
-            this.el.removeEventListener('touchstart', this);
-            this.el.removeEventListener('touchend', this);
             this.el.removeEventListener('touchcancel', this);
+            this.el.removeEventListener('touchend', this);
             this.el.removeEventListener('touchleave', this);
             this.el.removeEventListener('touchmove', this);
+            this.el.removeEventListener('touchstart', this);
         },
     };
 

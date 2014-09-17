@@ -6,7 +6,7 @@ SimpleSwipe provides a JavaScript interface for handling basic one-finger swipin
 
 Attach swipe listeners:
 ```JavaScript
-var s = new SimpleSwipe(elementId,
+var s = new SimpleSwipe(element,
     function (swipe, element) {
         console.log('swipe move', swipe);
     }, function (swipe, element) {
