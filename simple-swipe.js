@@ -60,6 +60,7 @@
                 this.y = event.touches[0].pageY;
                 if (this.callbackMove) {
                     this.callbackMove({
+                        event: event,
                         direction: this.getDirection(),
                         directionLast: this.getDirection(this.getAngle(this.prevX, this.prevY)),
                         length: this.getLength(),
@@ -74,6 +75,7 @@
             event.preventDefault();
             if (this.callbackEnd) {
                 this.callbackEnd({
+                    event: event,
                     direction: this.getDirection(),
                     length: this.getLength(),
                 }, this.el);
@@ -90,36 +92,40 @@
         },
         handleEvent: function (event) {
             switch (event.type) {
-            case 'touchmove':
-                this.touchMove(event);
-                break;
-            case 'touchstart':
-                this.touchStart(event);
-                break;
-            case 'touchend':
-                this.touchEnd(event);
-                break;
-            case 'touchcancel':
-                this.touchCancel();
-                break;
-            case 'touchleave':
-                this.touchCancel();
-                break;
+                case 'touchmove':
+                    this.touchMove(event);
+                    break;
+                case 'touchstart':
+                    this.touchStart(event);
+                    break;
+                case 'touchend':
+                    this.touchEnd(event);
+                    break;
+                case 'touchcancel':
+                    this.touchCancel();
+                    break;
+                case 'touchleave':
+                    this.touchCancel();
+                    break;
             }
         },
         addListeners: function () {
-            this.el.addEventListener('touchcancel', this);
-            this.el.addEventListener('touchend', this);
-            this.el.addEventListener('touchleave', this);
-            this.el.addEventListener('touchmove', this);
-            this.el.addEventListener('touchstart', this);
+            for(var i = 0; i < this.el.length; i++) {
+                this.el[i].addEventListener('touchcancel', this);
+                this.el[i].addEventListener('touchend', this);
+                this.el[i].addEventListener('touchleave', this);
+                this.el[i].addEventListener('touchmove', this);
+                this.el[i].addEventListener('touchstart', this);
+            }
         },
         removeListeners: function () {
-            this.el.removeEventListener('touchcancel', this);
-            this.el.removeEventListener('touchend', this);
-            this.el.removeEventListener('touchleave', this);
-            this.el.removeEventListener('touchmove', this);
-            this.el.removeEventListener('touchstart', this);
+            for(var i = 0; i < this.el.length; i++) {
+                this.el[i].removeEventListener('touchcancel', this);
+                this.el[i].removeEventListener('touchend', this);
+                this.el[i].removeEventListener('touchleave', this);
+                this.el[i].removeEventListener('touchmove', this);
+                this.el[i].removeEventListener('touchstart', this);
+            }
         },
     };
 
