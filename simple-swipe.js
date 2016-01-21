@@ -110,6 +110,9 @@
             }
         },
         addListeners: function () {
+            if(this.el.length === undefined) {
+                this.el = [this.el];
+            }
             for(var i = 0; i < this.el.length; i++) {
                 this.el[i].addEventListener('touchcancel', this);
                 this.el[i].addEventListener('touchend', this);
@@ -119,6 +122,9 @@
             }
         },
         removeListeners: function () {
+            if(this.el.length === undefined) {
+                this.el = [this.el];
+            }
             for(var i = 0; i < this.el.length; i++) {
                 this.el[i].removeEventListener('touchcancel', this);
                 this.el[i].removeEventListener('touchend', this);
